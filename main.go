@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	var num int
+	var num, count int
 	var done bool
 	for !done {
 		fmt.Print("Input number: ")
@@ -12,6 +12,7 @@ func main() {
 			fmt.Println("Number should be <12307")
 		} else {
 			for num < 12307 {
+				count++
 				if num < 0 {
 					num *= -1
 				} else if num%7 == 0 {
@@ -34,6 +35,7 @@ func main() {
 				fmt.Println("Result:", num)
 				done = true
 			}
+			fmt.Println("Iteration:", count)
 		}
 	}
 }
