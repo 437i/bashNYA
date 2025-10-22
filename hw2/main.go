@@ -81,30 +81,27 @@ func num_to_words(num int) string {
 	return strings.Join(parts, " ")
 }
 
-func cycle(num int) (bool, int, int) {
-	var count int
-	var done bool
-	for num < 12307 {
-		count++
-		if num < 0 {
-			num *= -1
-		} else if num%7 == 0 {
-			num *= 39
-		} else if num%9 == 0 {
-			num = num*13 + 1
+func cycle(num, count *int, done *bool) {
+	for *num < 12307 {
+		*count++
+		if *num < 0 {
+			*num *= -1
+		} else if *num%7 == 0 {
+			*num *= 39
+		} else if *num%9 == 0 {
+			*num = *num*13 + 1
 			continue
 		} else {
-			num = (num + 2) * 3
+			*num = (*num + 2) * 3
 		}
-		if num%13 == 0 && num%9 == 0 {
+		if *num%13 == 0 && *num%9 == 0 {
 			fmt.Println("service error")
-			done = true
+			*done = true
 			break
 		} else {
-			num++
+			*num++
 		}
 	}
-	return done, num, count
 }
 
 func main() {
@@ -116,7 +113,7 @@ func main() {
 		if num >= 12307 {
 			fmt.Println("Number should be (n < 12307)")
 		} else {
-			done, num, count = cycle(num)
+			cycle(&num, &count, &done)
 			if !done {
 				text := num_to_words(num)
 				fmt.Println("Result num:", num)
