@@ -38,19 +38,27 @@ func num_to_words(num int) string {
 		}
 	}
 
-	add_thousands := func(num int) {
-		t_hund := num / 100
-		t_rem := num % 100
-		if t_hund > 0 {
-			add_part(hundreds[t_hund])
+	under_hun := func(num int, t_flag bool) {
+		hundred := num / 100
+		remainder := num % 100
+		if hundred > 0 {
+			add_part(hundreds[hundred])
 		}
-		if t_rem < 20 {
-			thousands_switch(t_rem)
+		if remainder < 20 {
+			if t_flag {
+				thousands_switch(remainder)
+			} else {
+				add_part(units[remainder])
+			}
 		} else {
-			t_tens := t_rem / 10
-			t_units := t_rem % 10
-			add_part(tens[t_tens])
-			thousands_switch(t_units)
+			ten := remainder / 10
+			unit := remainder % 10
+			add_part(tens[ten])
+			if t_flag {
+				thousands_switch(unit)
+			} else {
+				add_part(units[unit])
+			}
 		}
 	}
 
@@ -60,23 +68,10 @@ func num_to_words(num int) string {
 		if thousand > 999 {
 			return "number too large (>999999)"
 		}
-		add_thousands(thousand)
+		under_hun(thousand, true)
 	}
 
-	hundred := remainder / 100
-	remainder %= 100
-	if hundred > 0 {
-		add_part(hundreds[hundred])
-	}
-
-	if remainder < 20 {
-		add_part(units[remainder])
-	} else {
-		ten := remainder / 10
-		unit := remainder % 10
-		add_part(tens[ten])
-		add_part(units[unit])
-	}
+	under_hun(remainder, false)
 
 	return strings.Join(parts, " ")
 }
