@@ -1,4 +1,4 @@
-package stack
+package main
 
 import "fmt"
 
@@ -14,15 +14,15 @@ func (s *Stack) Push(num int) {
 	s.items = append(s.items, num)
 }
 
-func (s *Stack) Pop() int {
+func (s *Stack) Pop() (int, bool) {
 	if s.IsEmpty() {
 		fmt.Println("error: empty stack")
-		return 0
+		return 0, false
 	}
 	last_index := len(s.items) - 1
 	last_item := s.items[last_index]
 	s.items = s.items[:last_index]
-	return last_item
+	return last_item, true
 }
 
 func (s *Stack) IsEmpty() bool {
