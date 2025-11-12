@@ -11,21 +11,21 @@ path_to_bin="./uniq"
 function parse_params () {
   local flags=""
  
-  cdu_flag=$(echo "$1" | grep -o "[cdu]")
+  cdu_flag=$(echo "$1" | grep -Po "[cdu]")
   if [ "$cdu_flag" != "" ] && [ ${#cdu_flag} -eq 1 ]; then
     flags="${flags}-$cdu_flag "
   fi
   
-  if [[ $(echo "$1" | grep -o "i") != "" ]]; then
+  if [[ $(echo "$1" | grep -Po "i") != "" ]]; then
     flags="${flags}-i "
   fi
   
-  if [[ $(echo "$1" | grep -o "f") != "" ]]; then
-    flags="${flags}-f $(echo "$1" | grep -o "(?<=f)\d+(?=s|\.)") "
+  if [[ $(echo "$1" | grep -Po "f") != "" ]]; then
+    flags="${flags}-f $(echo "$1" | grep -Po "(?<=f)\d+(?=s|\.)") "
   fi
   
-  if [[ $(echo "$1" | grep -o "s") != "" ]]; then
-    flags="${flags}-s $(echo "$1" | grep -o "(?<=s)\d+(?=\.)") "
+  if [[ $(echo "$1" | grep -Po "s") != "" ]]; then
+    flags="${flags}-s $(echo "$1" | grep -Po "(?<=s)\d+(?=\.)") "
   fi
   
   echo "$flags"
